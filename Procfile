@@ -1,0 +1,1 @@
+web: gunicorn AWT_Backend.wsgi --log-file -
