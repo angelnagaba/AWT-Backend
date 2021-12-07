@@ -13,7 +13,7 @@ class CaretakerSerializer(serializers.ModelSerializer):
    
     class Meta:
         model = Care_taker
-        fields = ['id', 'caretaker_name','location','contact']
+        fields = ['id', 'caretaker_name','child','location','contact']
 
     # def get_user_full_name(self, obj):
     #     return '{} {}'.format(obj.user.first_name, obj.user.last_name)
@@ -22,7 +22,10 @@ class ChildSerializer(serializers.ModelSerializer):
    
     class Meta:
         model = AutisticChildren
-        fields = ['id', 'child_name','caretaker_id','AWT_device_id','Emergency_contact_name']
+        fields = ['id', 'child_name','caretaker','AWT_device','Emergency_contact_name']
+
+    # def get_caretaker_name(self, obj):
+    #     return '{} {}'.format(obj.)
 
 #AWTDevice Serializer
 class DeviceSerializer(serializers.ModelSerializer):
