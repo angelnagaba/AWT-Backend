@@ -1,1 +1,1 @@
-web: gunicorn AWT_Backend.wsgi --log-file -
+web: gunicorn myproject.wsgi
