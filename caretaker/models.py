@@ -24,7 +24,7 @@ class AutisticChildren(models.Model):
 
 class Care_taker(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='caretaker',default=1)
-    child = models.ForeignKey('AutisticChildren', on_delete=models.CASCADE, related_name='children', null=True, blank=True)
+    #child = models.ForeignKey('AutisticChildren', on_delete=models.CASCADE, related_name='children', null=True, blank=True)
     location = models.PointField(srid=4326, null=True)
     contact = PhoneNumberField(_('Phone number'), blank=False, null=True)
     home_address = models.TextField(max_length=100, blank=True)

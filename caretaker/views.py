@@ -60,7 +60,8 @@ class UserViewSet(viewsets.ModelViewSet):
     Interface for User registration
     '''
 
-    serializer_class = UserSerializer
+    serializer_class = UserPostSerializer
+    queryset = User.objects.all().order_by('-id')
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     permission_classes = (permissions.AllowAny,)
     authentication_classes = ()
@@ -68,18 +69,6 @@ class UserViewSet(viewsets.ModelViewSet):
                      'email']
     ordering_fields = '_all_'
 
-    
-    def get_queryset(self):
-        queryset = User.objects.all()
-        user = self.request.user
-
-        # if self.request.user.is_superuser:
-        #     print(queryset)
-        #     queryset = queryset
-        # else:
-        #     queryset = User.objects.filter(id=user.id)
-
-        return queryset
 
     def create(self, request, format=None):
         serializer = UserPostSerializer(data=request.data)

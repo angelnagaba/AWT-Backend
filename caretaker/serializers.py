@@ -13,7 +13,7 @@ class CaretakerSerializer(serializers.ModelSerializer):
    
     class Meta:
         model = Care_taker
-        fields = ['id', 'user','child','location','contact','home_address']
+        fields = [ 'user','location','contact','home_address']
 
     # def get_user_full_name(self, obj):
     #     return '{} {}'.format(obj.user.first_name, obj.user.last_name)

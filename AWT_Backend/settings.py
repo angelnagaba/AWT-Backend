@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'django.contrib.gis',
 
+    'drf_yasg',
 
     #Local apps
     'caretaker',
