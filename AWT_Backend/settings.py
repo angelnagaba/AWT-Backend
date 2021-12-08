@@ -88,18 +88,6 @@ WSGI_APPLICATION = 'AWT_Backend.wsgi.application'
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
-DATABASES = {
-    'default': {
-        #'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        #'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'awt',
-        'USER': 'awtuser',
-        'PASSWORD': 'password',
-        'HOST': 'localhost',
-        'PORT': '',
-    }
-}
 
 
 # Password validation
@@ -175,3 +163,15 @@ DATABASES['default'].update(prod_db)
 
 
 django_heroku.settings(locals())
+DATABASES = {
+    'default': {
+        #'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        #'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'awt',
+        'USER': 'awtuser',
+        'PASSWORD': 'password',
+        'HOST': 'localhost',
+        'PORT': '',
+    }
+}
