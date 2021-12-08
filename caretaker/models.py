@@ -1,4 +1,4 @@
-from django.db import models
+
 from django.utils.translation import ugettext as _
 from django.contrib.auth.models import User
 from geopy.geocoders import Nominatim
@@ -11,7 +11,6 @@ from geopy.geocoders import Nominatim
 
 
 class AutisticChildren(models.Model):
-    #child = models.OneToOneField(User, on_delete=models.CASCADE, related_name='child')
     child_name = models.CharField(max_length=100, null=False, blank=False)
     caretaker = models.ForeignKey('Care_taker', on_delete=models.CASCADE, null=True, blank=True, related_name='caretaker')
     AWT_device = models.ForeignKey('AWT_Device', on_delete=models.CASCADE, related_name='device', null=True, blank=True)
@@ -19,15 +18,19 @@ class AutisticChildren(models.Model):
     Emergency_contact_phone = PhoneNumberField(_('Phone number'), blank=False, null=True)
     Emergency_contact_address = models.CharField(max_length=100, null=False, blank=False)
 
-class Care_taker(models.Model):
+    def __str__(self):
+        return self.child_name
 
-    caretaker_name = models.CharField(max_length=100, null=False, blank=False)
+
+class Care_taker(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='caretaker',default=1)
     child = models.ForeignKey('AutisticChildren', on_delete=models.CASCADE, related_name='children', null=True, blank=True)
     location = models.PointField(srid=4326, null=True)
     contact = PhoneNumberField(_('Phone number'), blank=False, null=True)
+    home_address = models.TextField(max_length=100, blank=True)
 
     def __str__(self):
-        return self.caretaker_name
+        return '{} {}'.format(self.user.first_name, self.user.last_name)
 
     @property
     def compute_location(self):
@@ -44,3 +47,6 @@ class Care_taker(models.Model):
 
 class AWT_Device(models.Model):
     serial_no = models.CharField(max_length=100, null=False, blank=False)
+    
+    def __str__(self):
+        return self.serial_no

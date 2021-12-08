@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from .models import (Care_taker,AutisticChildren, AWT_Device)
-from .serializers import (CaretakerSerializer, ChildSerializer, DeviceSerializer)
-from rest_framework import viewsets
-from rest_framework import permissions
+from .serializers import (CaretakerSerializer, ChildSerializer, DeviceSerializer, UserSerializer, UserPostSerializer)
+from rest_framework import viewsets, filters
+from rest_framework import permissions, status
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -18,6 +18,7 @@ from django.views.generic import (
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
+from django.contrib.auth.models import User
 import datetime
 from django.db import IntegrityError
 #from django_postgres_extensions.models.expressions import Index, SliceArray
@@ -52,3 +53,75 @@ class DeviceViewSet(viewsets.ModelViewSet):
     queryset = AWT_Device.objects.all().order_by('-id')
     serializer_class = DeviceSerializer
     permission_classes = [permissions.IsAuthenticated]
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    '''
+    Interface for User registration
+    '''
+
+    serializer_class = UserSerializer
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    permission_classes = (permissions.AllowAny,)
+    authentication_classes = ()
+    search_fields = ['username', 'first_name', 'last_name',
+                     'email']
+    ordering_fields = '_all_'
+
+    
+    def get_queryset(self):
+        queryset = User.objects.all()
+        user = self.request.user
+
+        # if self.request.user.is_superuser:
+        #     print(queryset)
+        #     queryset = queryset
+        # else:
+        #     queryset = User.objects.filter(id=user.id)
+
+        return queryset
+
+    def create(self, request, format=None):
+        serializer = UserPostSerializer(data=request.data)
+
+        if serializer.is_valid():
+            user = serializer
+            user.save()
+
+            # send an email
+            # user_object = User.objects.get(
+            #     username=serializer.data['username'])
+            # current_site = get_current_site(request)
+            # subject = 'Activate Your Account'
+            # message = render_to_string('account_activation_email.html', {
+            #     'user': user_object,
+            #     'domain': current_site.domain,
+            #     'uid': urlsafe_base64_encode(force_bytes(user_object.id)),
+            #     'token': account_activation_token.make_token(user_object),
+            # })
+            # to_email = serializer.data['email']
+            # email = EmailMessage(
+            #     subject, message, to=[
+            #         to_email], from_email="musa@8technologies.net"
+            # )
+            # email.content_subtype = "html"
+            # try:
+            #     email.send()
+            # except SMTPException as e:
+            #     print('There was an error sending an email: ', e)
+            response = {
+                'response': 'Your caretaker account has been created successfully, Please register your child'}
+            return Response(response, status=status.HTTP_201_CREATED)
+        print(serializer.errors)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def partial_update(self, request, *args, **kwargs):
+
+        instance = User.objects.get(pk=kwargs.get('pk'))
+        serializer = UserPostSerializer(
+            instance, data=request.data, partial=True)
+        if serializer.is_valid():
+
+            serializer.save()
+            return Response({'response': 'your caretaker profile has been updated successfully'})
+        return Response({'response': serializer.errors}, status=400)
