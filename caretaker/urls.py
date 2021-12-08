@@ -5,10 +5,10 @@ from rest_framework.urlpatterns import format_suffix_patterns
 
 
 router = routers.DefaultRouter()
-router.register(r'caretakers', CaretakerViewSet, basename='caretaker')
+#router.register(r'caretakers', CaretakerViewSet, basename='caretaker')
 router.register(r'children', ChildViewSet, basename='child')
 router.register(r'devices', DeviceViewSet, basename='device')
-router.register(r'registration',UserViewSet, basename='users')
+router.register(r'users',UserViewSet, basename='users')
 
 app_name = 'caretaker'
 urlpatterns = [
