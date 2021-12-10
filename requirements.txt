@@ -1,8 +1,10 @@
 asgiref==3.4.1
 certifi==2021.10.8
+cffi==1.15.0
 charset-normalizer==2.0.9
 coreapi==2.3.3
 coreschema==0.0.4
+cryptography==36.0.0
 dj-database-url==0.5.0
 Django==3.2.9
 django-cors-headers==3.10.0
@@ -10,6 +12,7 @@ django-filter==21.1
 django-heroku==0.3.1
 django-phonenumber-field==6.0.0
 django-postgres-extensions==0.9.3
+django-rest-knox==4.1.0
 django-utils-six==2.0
 djangorestframework==3.12.4
 drf-extra-fields==3.2.1
@@ -28,6 +31,7 @@ packaging==21.3
 phonenumbers==8.12.38
 psycopg2==2.9.2
 psycopg2-binary==2.8.5
+pycparser==2.21
 pyparsing==3.0.6
 pytz==2021.3
 requests==2.26.0
