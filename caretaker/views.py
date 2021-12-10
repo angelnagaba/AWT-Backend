@@ -10,6 +10,9 @@ from django.shortcuts import get_object_or_404
 from django.shortcuts import redirect
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.mixins import LoginRequiredMixin, AccessMixin
+#Login
+from django.contrib.auth import authenticate
+from django.contrib.auth import logout, authenticate, login
 from django.urls import reverse_lazy
 from django.http import (HttpResponseRedirect, JsonResponse, HttpResponse,
                          Http404)
@@ -25,7 +28,10 @@ from django.db import IntegrityError
 #from rest_framework import filters
 from django.contrib.gis.db.models.functions import Distance
 from django.contrib.gis.geos import Point
-# views for sector
+
+# views for login
+from rest_framework.authtoken.serializers import AuthTokenSerializer
+from knox.views import LoginView as KnoxLoginView
 
 
 class CaretakerViewSet(viewsets.ModelViewSet):
@@ -114,3 +120,14 @@ class UserViewSet(viewsets.ModelViewSet):
             serializer.save()
             return Response({'response': 'your caretaker profile has been updated successfully'})
         return Response({'response': serializer.errors}, status=400)
+
+#Login view
+class LoginAPI(KnoxLoginView):
+    permission_classes = (permissions.AllowAny,)
+
+    def post(self, request, format=None):
+        serializer = AuthTokenSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        login(request, user)
+        return super(LoginAPI, self).post(request, format=None)
