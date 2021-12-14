@@ -31,7 +31,7 @@ from django.contrib.gis.geos import Point
 
 # views for login
 from rest_framework.authtoken.serializers import AuthTokenSerializer
-from knox.views import LoginView as KnoxLoginView
+#from knox.views import LoginView as KnoxLoginView
 
 
 class CaretakerViewSet(viewsets.ModelViewSet):
@@ -83,51 +83,18 @@ class UserViewSet(viewsets.ModelViewSet):
             user = serializer
             user.save()
 
-            # send an email
-            # user_object = User.objects.get(
-            #     username=serializer.data['username'])
-            # current_site = get_current_site(request)
-            # subject = 'Activate Your Account'
-            # message = render_to_string('account_activation_email.html', {
-            #     'user': user_object,
-            #     'domain': current_site.domain,
-            #     'uid': urlsafe_base64_encode(force_bytes(user_object.id)),
-            #     'token': account_activation_token.make_token(user_object),
-            # })
-            # to_email = serializer.data['email']
-            # email = EmailMessage(
-            #     subject, message, to=[
-            #         to_email], from_email="musa@8technologies.net"
-            # )
-            # email.content_subtype = "html"
-            # try:
-            #     email.send()
-            # except SMTPException as e:
-            #     print('There was an error sending an email: ', e)
-            response = {
-                'response': 'Your caretaker account has been created successfully, Please register your child'}
-            return Response(response, status=status.HTTP_201_CREATED)
-        print(serializer.errors)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def partial_update(self, request, *args, **kwargs):
-
-        instance = User.objects.get(pk=kwargs.get('pk'))
-        serializer = UserPostSerializer(
-            instance, data=request.data, partial=True)
-        if serializer.is_valid():
-
-            serializer.save()
-            return Response({'response': 'your caretaker profile has been updated successfully'})
-        return Response({'response': serializer.errors}, status=400)
-
-#Login view
-class LoginAPI(KnoxLoginView):
-    permission_classes = (permissions.AllowAny,)
-
-    def post(self, request, format=None):
-        serializer = AuthTokenSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        user = serializer.validated_data['user']
-        login(request, user)
-        return super(LoginAPI, self).post(request, format=None)
+         
+class LoginAPI(APIView):
+    #authentication_classes = ()
+    #permission_classes = [IsAuthenticated]
+  
+    def get(self, request, format=None):
+        content = {
+            
+            # `django.contrib.auth.User` instance
+            'user': str(request.user),
+            
+            # None
+            'auth': str(request.auth),
+        }
+        return Response(content)

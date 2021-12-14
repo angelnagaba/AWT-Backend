@@ -101,3 +101,4 @@ class UserPostSerializer(serializers.ModelSerializer):
             instance.caretaker.save()
         # Rest will be handled by DRF
         return super().update(instance, validated_data)
+
