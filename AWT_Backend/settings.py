@@ -28,8 +28,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    #'knox',
-   # 'rest_framework.authtoken',
+   
+    'rest_framework.authtoken',
     'django.contrib.gis',
 
     'drf_yasg',
@@ -126,20 +126,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 #Rest framework code added by Angel
 REST_FRAMEWORK = {
-   
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.AllowAny',
-        'rest_framework.authentication.BasicAuthentication',
-        'rest_framework.authentication.TokenAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-       # 'rest_framework.authentication.BasicAuthentication',
-        #'rest_framework.authentication.TokenAuthentication',
-       
-     ],
-     'DEFAULT_PERMISSION_CLASSES': [
-]
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',  
+    ],
 }
-
 #PROJECT_ROOT   =   os.path.join(os.path.abspath(__file__))
 STATIC_ROOT  =   os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'

@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from .models import (Care_taker,AutisticChildren, AWT_Device)
-from .serializers import (CaretakerSerializer, ChildSerializer, DeviceSerializer, UserSerializer, UserPostSerializer)
+from .models import (Care_taker,AutisticChildren)
+from .serializers import (CaretakerSerializer, ChildSerializer, UserSerializer, UserPostSerializer, MyTokenObtainPairSerializer)
 from rest_framework import viewsets, filters
 from rest_framework import permissions, status
 from rest_framework.renderers import TemplateHTMLRenderer
@@ -24,15 +24,11 @@ from django.core.mail import EmailMessage
 from django.contrib.auth.models import User
 import datetime
 from django.db import IntegrityError
-#from django_postgres_extensions.models.expressions import Index, SliceArray
-#from rest_framework import filters
 from django.contrib.gis.db.models.functions import Distance
 from django.contrib.gis.geos import Point
-
-# views for login
 from rest_framework.authtoken.serializers import AuthTokenSerializer
-#from knox.views import LoginView as KnoxLoginView
-
+from rest_framework.permissions import AllowAny
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 class CaretakerViewSet(viewsets.ModelViewSet):
     """
@@ -52,13 +48,6 @@ class ChildViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
 
-class DeviceViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows sectors to be viewed or edited.
-    """
-    queryset = AWT_Device.objects.all().order_by('-id')
-    serializer_class = DeviceSerializer
-    permission_classes = [permissions.IsAuthenticated]
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -83,18 +72,7 @@ class UserViewSet(viewsets.ModelViewSet):
             user = serializer
             user.save()
 
-         
-class LoginAPI(APIView):
-    #authentication_classes = ()
-    #permission_classes = [IsAuthenticated]
-  
-    def get(self, request, format=None):
-        content = {
-            
-            # `django.contrib.auth.User` instance
-            'user': str(request.user),
-            
-            # None
-            'auth': str(request.auth),
-        }
-        return Response(content)
+#View for obtaining authentication token 
+class MyObtainTokenPairView(TokenObtainPairView):
+    permission_classes = (AllowAny,)
+    serializer_class = MyTokenObtainPairSerializer

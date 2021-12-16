@@ -15,6 +15,7 @@ django-postgres-extensions==0.9.3
 django-rest-knox==4.1.0
 django-utils-six==2.0
 djangorestframework==3.12.4
+djangorestframework-simplejwt==5.0.0
 drf-extra-fields==3.2.1
 drf-yasg==1.20.0
 geographiclib==1.52
@@ -32,6 +33,7 @@ phonenumbers==8.12.38
 psycopg2==2.9.2
 psycopg2-binary==2.8.5
 pycparser==2.21
+PyJWT==2.3.0
 pyparsing==3.0.6
 pytz==2021.3
 requests==2.26.0
