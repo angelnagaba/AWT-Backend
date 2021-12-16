@@ -47,9 +47,6 @@ class ChildViewSet(viewsets.ModelViewSet):
     serializer_class = ChildSerializer
     permission_classes = [permissions.IsAuthenticated]
 
-
-
-
 class UserViewSet(viewsets.ModelViewSet):
     '''
     Interface for User registration

@@ -6,10 +6,8 @@ import phonenumbers
 from phonenumber_field.modelfields import PhoneNumberField
 from django.contrib.gis.db import models
 from geopy.geocoders import Nominatim
-# Create your models here.
 
-
-
+# Models here.
 class AutisticChildren(models.Model):
     child_name = models.CharField(max_length=100, null=False, blank=False)
     caretaker = models.ForeignKey('Care_taker', on_delete=models.CASCADE, null=True, blank=True, related_name='caretaker')

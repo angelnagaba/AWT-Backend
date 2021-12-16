@@ -1,10 +1,8 @@
 from rest_framework import serializers
 from .models import (Care_taker, AutisticChildren)
-
 from django.contrib.auth.models import User
 from drf_extra_fields.fields import Base64ImageField
 from geopy.geocoders import Nominatim
-#aDDED A LINE HERE
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 class CaretakerSerializer(serializers.ModelSerializer):
@@ -40,7 +38,6 @@ class UserSerializer(serializers.Serializer):
     class Meta:
         model = User
         fields = '_all_'
-
 
 #User post serializer
 class UserPostSerializer(serializers.ModelSerializer):
