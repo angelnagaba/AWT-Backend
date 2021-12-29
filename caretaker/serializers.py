@@ -95,3 +95,21 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         # Add custom claims
         token['username'] = user.username
         return token
+    
+    def validate(self, attrs):
+        # The default result (access/refresh tokens)
+        data = super(MyTokenObtainPairSerializer, self).validate(attrs)
+
+        # Custom data you want to include
+        data.update({'user': self.user.username})
+        data.update({'id': self.user.id})
+        data.update({'first name': self.user.first_name})
+        data.update({'last name': self.user.last_name})
+        data.update({'email': self.user.email})
+        #caretaker.update({'location': caretaker.location})
+        #data.update({'contact': self.user.contact})
+        #data.update({'home_address': self.user.home_address})
+        
+
+        # and everything else you want to send in the response
+        return data
