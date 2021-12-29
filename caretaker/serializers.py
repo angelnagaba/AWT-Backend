@@ -26,7 +26,7 @@ class UserSerializer(serializers.Serializer):
     last_name = serializers.CharField(max_length=100)
     email = serializers.EmailField()
     is_active= serializers.BooleanField()
-    username = serializers.CharField(max_length=100)
+    username = serializers.CharField(max_length=200,required=True)
     full_name = serializers.SerializerMethodField(
         method_name='get_user_full_name', source='username')
     contact = serializers.CharField(

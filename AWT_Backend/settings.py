@@ -165,3 +165,5 @@ DATABASES = {
 }
 DATABASES['default'].update(prod_db)
 DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
+
+#AUTH_USER_MODEL = 'caretaker.Care_taker'

@@ -1,4 +1,4 @@
-
+from django.contrib.gis.geos import Point
 from django.utils.translation import ugettext as _
 from django.contrib.auth.models import User
 from geopy.geocoders import Nominatim
@@ -13,7 +13,7 @@ class AutisticChildren(models.Model):
     caretaker = models.ForeignKey('Care_taker', on_delete=models.CASCADE, null=True, blank=True, related_name='caretaker')
     AWT_device_serialNo = models.CharField(max_length=100, null=True, blank=True)
     Emergency_contact_name = models.CharField(max_length=100, null=False, blank=False)
-    Emergency_contact_phone = PhoneNumberField(_('Phone number'), blank=False, null=False)
+    Emergency_contact_phone = PhoneNumberField(_('Phone number'), blank=False, null=True)
     Emergency_contact_address = models.CharField(max_length=100, null=False, blank=False)
 
     def __str__(self):

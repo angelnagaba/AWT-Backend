@@ -10,7 +10,6 @@ from django.shortcuts import get_object_or_404
 from django.shortcuts import redirect
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.mixins import LoginRequiredMixin, AccessMixin
-#Login
 from django.contrib.auth import authenticate
 from django.contrib.auth import logout, authenticate, login
 from django.urls import reverse_lazy
@@ -68,7 +67,8 @@ class UserViewSet(viewsets.ModelViewSet):
         if serializer.is_valid():
             user = serializer
             user.save()
-
+        return super().create(request)
+  
 #View for obtaining authentication token 
 class MyObtainTokenPairView(TokenObtainPairView):
     permission_classes = (AllowAny,)

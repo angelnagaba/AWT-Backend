@@ -8,8 +8,6 @@ router = routers.DefaultRouter()
 router.register(r'children', ChildViewSet, basename='child')
 router.register(r'caretakers',UserViewSet, basename='users')
 
-
-
 app_name = 'caretaker'
 urlpatterns = [
     path('api/', include(router.urls)),
