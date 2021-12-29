@@ -58,7 +58,7 @@ class UserViewSet(viewsets.ModelViewSet):
     authentication_classes = ()
     search_fields = ['username', 'first_name', 'last_name',
                      'email']
-    ordering_fields = '_all_'
+    ordering_fields = 'all'
 
 
     def create(self, request, format=None):
@@ -67,7 +67,10 @@ class UserViewSet(viewsets.ModelViewSet):
         if serializer.is_valid():
             user = serializer
             user.save()
-        return super().create(request)
+            response = {
+                'response': 'Your account has been created successfully'}
+            return Response(response, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
   
 #View for obtaining authentication token 
 class MyObtainTokenPairView(TokenObtainPairView):

@@ -87,6 +87,7 @@ class UserPostSerializer(serializers.ModelSerializer):
 
 #token generation serialiser
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    caretaker = None
 
     @classmethod
     def get_token(cls, user):
@@ -106,10 +107,16 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         data.update({'first name': self.user.first_name})
         data.update({'last name': self.user.last_name})
         data.update({'email': self.user.email})
-        #caretaker.update({'location': caretaker.location})
-        #data.update({'contact': self.user.contact})
-        #data.update({'home_address': self.user.home_address})
+        try:
+            caretaker = user.caretaker
+            data.update({'location': self.user.caretaker.location})
+            data.update({'contact': self.user.caretaker.contact})
+            data.update({'home_address': self.user.caretaker.home_address})
+            
+        except:
+            caretaker = None
         
-
-        # and everything else you want to send in the response
         return data
+
+
+
