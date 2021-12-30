@@ -86,6 +86,40 @@ class UserPostSerializer(serializers.ModelSerializer):
         return super().update(instance, validated_data)
 
 #token generation serialiser
+# class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+#     caretaker = None
+
+#     @classmethod
+#     def get_token(cls, user):
+#         token = super(MyTokenObtainPairSerializer, cls).get_token(user)
+
+#         # Add custom claims
+#         token['username'] = user.username
+#         return token
+    
+#     def validate(self, attrs):
+#         # The default result (access/refresh tokens)
+#         data = super(MyTokenObtainPairSerializer, self).validate(attrs)
+
+#         # Custom data you want to include
+#         data.update({'user': self.user.username})
+#         data.update({'id': self.user.id})
+#         data.update({'first name': self.user.first_name})
+#         data.update({'last name': self.user.last_name})
+#         data.update({'email': self.user.email})
+#         try:
+#             caretaker = user.caretaker
+#             data.update({'location': self.user.caretaker.location})
+#             data.update({'contact': self.user.caretaker.contact})
+#             data.update({'home_address': self.user.caretaker.home_address})
+            
+#         except:
+#             caretaker = None
+        
+#         return data
+
+
+
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     caretaker = None
 
@@ -108,15 +142,11 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         data.update({'last name': self.user.last_name})
         data.update({'email': self.user.email})
         try:
-            caretaker = user.caretaker
-            data.update({'location': self.user.caretaker.location})
-            data.update({'contact': self.user.caretaker.contact})
+            data.update({'location': str(self.user.caretaker.location)})        
+            data.update({'contact': str(self.user.caretaker.contact)})
             data.update({'home_address': self.user.caretaker.home_address})
             
         except:
             caretaker = None
         
         return data
-
-
-
