@@ -77,46 +77,14 @@ class UserPostSerializer(serializers.ModelSerializer):
         caretaker_data = validated_data.pop('caretaker', None)
         # If we have one
         if caretaker_data is not None:
-            instance.caretaker.phone_number = caretaker_data['phone_number']
-            instance.caretaker.alternative_contact = caretaker_data['alternative_contact']
-            instance.caretaker.gender = caretaker_data['gender']
+        
+            instance.caretaker.contact = caretaker_data['contact']
+            instance.caretaker.home_address = caretaker_data['home_address']
+            instance.caretaker.location = caretaker_data['location']
             # And save caretaker
             instance.caretaker.save()
         # Rest will be handled by DRF
         return super().update(instance, validated_data)
-
-#token generation serialiser
-# class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
-#     caretaker = None
-
-#     @classmethod
-#     def get_token(cls, user):
-#         token = super(MyTokenObtainPairSerializer, cls).get_token(user)
-
-#         # Add custom claims
-#         token['username'] = user.username
-#         return token
-    
-#     def validate(self, attrs):
-#         # The default result (access/refresh tokens)
-#         data = super(MyTokenObtainPairSerializer, self).validate(attrs)
-
-#         # Custom data you want to include
-#         data.update({'user': self.user.username})
-#         data.update({'id': self.user.id})
-#         data.update({'first name': self.user.first_name})
-#         data.update({'last name': self.user.last_name})
-#         data.update({'email': self.user.email})
-#         try:
-#             caretaker = user.caretaker
-#             data.update({'location': self.user.caretaker.location})
-#             data.update({'contact': self.user.caretaker.contact})
-#             data.update({'home_address': self.user.caretaker.home_address})
-            
-#         except:
-#             caretaker = None
-        
-#         return data
 
 
 
