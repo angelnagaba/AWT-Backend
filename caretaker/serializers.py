@@ -9,11 +9,12 @@ class CaretakerSerializer(serializers.ModelSerializer):
   
     class Meta:
         model = Care_taker
-        fields = [ 'user','location','contact','home_address']
+        fields = [ 'id','location','contact','home_address']
 
     
 class ChildSerializer(serializers.ModelSerializer):
-   
+    caretaker= serializers.ReadOnlyField(source='caretaker.user.username')
+
     class Meta:
         model = AutisticChildren
         fields = ['id', 'child_name','caretaker','AWT_device_serialNo','Emergency_contact_name', 'Emergency_contact_phone','Emergency_contact_address']
