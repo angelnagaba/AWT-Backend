@@ -13,7 +13,6 @@ class CaretakerSerializer(serializers.ModelSerializer):
 
     
 class ChildSerializer(serializers.ModelSerializer):
-    caretaker= serializers.ReadOnlyField(source='caretaker.user.username')
 
     class Meta:
         model = AutisticChildren
